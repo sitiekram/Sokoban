@@ -1,0 +1,24 @@
+.Space
+{
+    width:50px;
+    border:2px solid white ;
+    height:50px;
+}
+.Goal
+{
+    width:50px;
+    height:50px;
+    border:2px white solid;
+    position:relative;
+}
+.Circle
+{
+    height: 25px;
+    width: 25px;
+    background-color: rgb(253, 207, 4);
+    border-radius: 50%;
+    position:absolute;
+    right:25px;
+    bottom:25px;
+    display: inline-block;
+}
