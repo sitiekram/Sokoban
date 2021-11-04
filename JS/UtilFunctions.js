@@ -1,33 +1,67 @@
 function PrintBoard(tileMap)
 {
-    var tb1Board= document.getElementById('tb1Board');
-    var strHTML='';
-    for(let x=0; x<tileMap.width;x++)
+    for(let x = 0; x < tileMap.height; x++)
     {
-        strHTML+="<tr>";
-        for(let y = 0; y<tileMap.height;y++)
+        for(let y = 0; y < tileMap.width; y++)
         {
-            strHTML+="<td>";
-            if(tileMap.mapGrid[x,y]=="W")
-              {
-                  strHTML +="<img src='./img/brick-wall.png' width='50' height='50'>";
-              }
-            else if(tileMap.mapGrid[x,y]==" ")
-              {
-                tb1Board.classList.add(Space);
-              }
-            else if(tileMap.mapGrid[x,y]=="B")
+            if(tileMap.mapGrid[x][y][0] == "W")
             {
-                strHTML +="<img src='./img/box.png' width='50' height='50'>";
+                var img = document.createElement('img');
+                img.src = 'img/Wall.jpg';
+                document.getElementById(x + "," + y).appendChild(img);
             }
-            else if(tileMap.mapGrid[x,y]=="G")
+            else if(tileMap.mapGrid[x][y][0] == "B")
             {
-                strHTML +="<div class='Goal'><span class='Circle'></span></div>";
+                var img = document.createElement('img');
+                img.src = 'img/Block.jpg';
+                document.getElementById(x + "," + y).appendChild(img);
             }
-            strHTML+="</td>";   
+            else if(tileMap.mapGrid[x][y][0] == "G")
+            {
+                var img = document.createElement('img');
+                img.src = 'img/Goal.jpg';
+                document.getElementById(x + "," + y).appendChild(img);
+            }
+            else if(tileMap.mapGrid[x][y][0] == "P")
+            {
+                var img = document.createElement('img');
+                img.src = 'img/Player.jpg';
+                img.classList.add("MyCssClass");
+                document.getElementById(x + "," + y).appendChild(img);
+
+            }
+            else
+            {
+                var img = document.createElement('img');
+                img.src = 'img/Background.jpg';
+                document.getElementById(x + "," + y).appendChild(img);
+            }
         }
-        strHTML+="</tr>";
     }
-    tb1Board.innerHTML=strHTML;
 }
 PrintBoard(tileMap01);
+ document.addEventListener('keydown', arrowKeys)
+function arrowKeys(e)
+{
+    var position = document.getElementsByClassName("MyCssClass")[0].id;
+    if(e.which==38)
+    {
+      position +=(0,-1);
+      document.getElementsByClassName("MyCssClass")[0].id = position;
+    }
+    else if(e.which==37)
+    {
+      position +=(-1,0);
+      document.getElementsByClassName("MyCssClass")[0].id = position;
+    }
+    else if(e.which==39)
+    {
+      position +=(1,0);
+      document.getElementsByClassName("MyCssClass")[0].id = position;
+    }
+    else if(e.which==40)
+    {
+      position +=(0,1);
+      document.getElementsByClassName("MyCssClass")[0].id = position;
+    }
+};
