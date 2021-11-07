@@ -7,7 +7,7 @@ function PrintBoard(tileMap)
             if(tileMap.mapGrid[x][y][0] == "W")
             {
                 var img = document.createElement('img');
-                img.src = '../img/Wall.jpg';
+                img.src = 'img/Wall.jpg';
                 document.getElementById(x + "," + y).appendChild(img);
             }
             else if(tileMap.mapGrid[x][y][0] == "B")
