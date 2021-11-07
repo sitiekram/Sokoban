@@ -8,33 +8,33 @@ function PrintBoard(tileMap)
             {
                 var img = document.createElement('img');
                 img.src = 'img/Wall.jpg';
-                document.getElementById(x + "," + y).appendChild(img);
+                document.getElementById("x"+x + "y" + y).appendChild(img);
             }
             else if(tileMap.mapGrid[x][y][0] == "B")
             {
                 var img = document.createElement('img');
                 img.src = 'img/Block.jpg';
-                document.getElementById(x + "," + y).appendChild(img);
+                document.getElementById("x"+x + "y" + y).appendChild(img);
             }
             else if(tileMap.mapGrid[x][y][0] == "G")
             {
                 var img = document.createElement('img');
                 img.src = 'img/Goal.jpg';
-                document.getElementById(x + "," + y).appendChild(img);
+                document.getElementById("x"+x + "y" + y).appendChild(img);
             }
             else if(tileMap.mapGrid[x][y][0] == "P")
             {
                 var img = document.createElement('img');
                 img.src = 'img/Player.jpg';
                 img.classList.add("MyCssClass");
-                document.getElementById(x + "," + y).appendChild(img);
+                document.getElementById("x"+x + "y" + y).appendChild(img);
 
             }
-          else
+            else
             {
                 var img = document.createElement('img');
                 img.src = 'img/Background.jpg';
-                document.getElementById("x"+x + "y" + y). appendChild(img);
+                document.getElementById("x"+x + "y" + y).appendChild(img);
             }
         }
     }
