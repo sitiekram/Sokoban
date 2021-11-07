@@ -34,7 +34,7 @@ function PrintBoard(tileMap)
             {
                 var img = document.createElement('img');
                 img.src = 'img/Background.jpg';
-                document.getElementById("x"+x + "y" + y).appendChild(img);
+                document.getElementById("x"+x + "y" + y). appendChild(img);
             }
         }
     }
