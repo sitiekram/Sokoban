@@ -30,11 +30,11 @@ function PrintBoard(tileMap)
                 document.getElementById(x + "," + y).appendChild(img);
 
             }
-            else
+          else
             {
                 var img = document.createElement('img');
                 img.src = 'img/Background.jpg';
-                document.getElementById(x + "," + y).appendChild(img);
+                document.getElementById("x"+x + "y" + y).appendChild(img);
             }
         }
     }
