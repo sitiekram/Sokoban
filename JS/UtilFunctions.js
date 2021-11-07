@@ -41,31 +41,38 @@ function PrintBoard(tileMap)
 }
 PrintBoard(tileMap01);
  document.addEventListener('keydown', arrowKeys)
-function arrowKeys(e)
-{
-    var position = document.getElementsByClassName("MyCssClass")[0].id;
-    if(e.which==38)
+function arrowKeys(event)
+{ 
+    let xChange;
+    let yChange;
+    switch(event.which)
     {
-      position +=(0,-1);
-      document.getElementsByClassName("MyCssClass")[0].id = position;
-    }
-    else if(e.which==37)
-    {
-      position +=(-1,0);
-      document.getElementsByClassName("MyCssClass")[0].id = position;
-    }
-    else if(e.which==39)
-    {
-      position +=(1,0);
-      document.getElementsByClassName("MyCssClass")[0].id = position;
-    }
-    else if(e.which==40)
-    {
-      position +=(0,1);
-      document.getElementsByClassName("MyCssClass")[0].id = position;
+      case 37:
+          xChange=0;
+          yChange= -1;
+          //move left
+          move(xChange,yChange);
+          break;
+      case 38:
+          xChange = -1;
+          yChange = 0;
+          //move up
+          move(xChange,yChange);
+          break;
+      case 39:
+          xChange = 0;
+          yChange = 1;
+          //move right
+          move(xChange,yChange);
+          break;
+      case 40:
+          xChange = 1;
+          yChange = 0;
+          //move down
+          move(xChange,yChange);
+          break;
     }
 }
-
 let isGoal = false;
 function move(xChange, yChange)
 {
@@ -241,4 +248,6 @@ function move(xChange, yChange)
         }
     }
 } 
+
+
 
