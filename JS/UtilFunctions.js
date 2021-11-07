@@ -85,6 +85,7 @@ function move(xChange, yChange)
             if(tileMap01.mapGrid[x][y] == "P" && tileMap01.mapGrid[x+xChange][y+yChange] != "W" && !done)
             
             { 
+                console.log("true");
                 if(tileMap01.mapGrid[x+xChange][y+yChange] == "G" 
                 || tileMap01.mapGrid[x-xChange][y-yChange] == "G"
                 || tileMap01.mapGrid[x-xChange][y-yChange] == "BG")
