@@ -1,94 +1,211 @@
-function PrintBoard(tileMap)
+function drawMap(tileMap)
 {
+    // debugger;
     for(let x = 0; x < tileMap.height; x++)
     {
         for(let y = 0; y < tileMap.width; y++)
         {
-            if(tileMap.mapGrid[x][y][0] == "W")
+            if(tileMap.mapGrid[x][y] == "W")
             {
-                var img = document.createElement('img');
+                let img = document.createElement('img');
                 img.src = 'img/Wall.jpg';
-                document.getElementById("x"+x + "y" + y).appendChild(img);
+                document.getElementById(x + "," + y).appendChild(img);
             }
-            else if(tileMap.mapGrid[x][y][0] == "B")
+            else if(tileMap.mapGrid[x][y] == "B")
             {
-                var img = document.createElement('img');
-                img.src = 'img/Block.jpg';
-                document.getElementById("x"+x + "y" + y).appendChild(img);
+                let = document.createElement('img');
+                let.src = 'img/Block.jpg';
+                document.getElementById(x + "," + y).appendChild(let);
             }
-            else if(tileMap.mapGrid[x][y][0] == "G")
+            else if(tileMap.mapGrid[x][y] == "G")
             {
-                var img = document.createElement('img');
-                img.src = 'img/Goal.jpg';
-                document.getElementById("x"+x + "y" + y).appendChild(img);
+                let = document.createElement('img');
+                let.src = 'img/Goal.jpg';
+                document.getElementById(x + "," + y).appendChild(let);
             }
-            else if(tileMap.mapGrid[x][y][0] == "P")
+            else if(tileMap.mapGrid[x][y] == "P")
             {
-                var img = document.createElement('img');
-                img.src = 'img/Player.jpg';
-                img.classList.add("MyCssClass");
-                document.getElementById("x"+x + "y" + y).appendChild(img);
-
+                let = document.createElement('img');
+                let.src = 'img/Player.jpg';
+                document.getElementById(x + "," + y).appendChild(let);
             }
             else
             {
-                var img = document.createElement('img');
-                img.src = 'img/Background.jpg';
-                document.getElementById("x"+x + "y" + y).appendChild(img);
+                let = document.createElement('img');
+                let.src = 'img/Background.jpg';
+                document.getElementById(x + "," + y).appendChild(let);
             }
+            console.clear;
+            console.log("x:" + x + " y:" + y);
+            console.log(tileMap.mapGrid[x][y]);
         }
     }
 }
-PrintBoard(tileMap01);
- document.addEventListener('keydown', arrowKeys)
-function arrowKeys(event)
-{ 
-    let xChange;
-    let yChange;
-    switch(event.which)
-    {
-      case 37:
-          xChange=0;
-          yChange= -1;
-          //move left
-          move(xChange,yChange);
-          break;
-      case 38:
-          xChange = -1;
-          yChange = 0;
-          //move up
-          move(xChange,yChange);
-          break;
-      case 39:
-          xChange = 0;
-          yChange = 1;
-          //move right
-          move(xChange,yChange);
-          break;
-      case 40:
-          xChange = 1;
-          yChange = 0;
-          //move down
-          move(xChange,yChange);
-          break;
-    }
-}
+drawMap(tileMap01);
+
 let isGoal = false;
-function move(xChange, yChange)
+document.onkeydown = function arrowKeys(e) {
+    let xComp;
+    let yComp;
+    switch (e.keyCode) {
+        //move left
+        case 37:
+            xComp = 0;
+            yComp = -1;
+            move(xComp, yComp)
+            break;
+        //move up
+        case 38:
+            xComp = -1;
+            yComp = 0;
+            move(xComp, yComp)
+            break;
+        //move right
+        case 39:
+            xComp = 0;
+            yComp = 1;
+            move(xComp, yComp)
+            break;
+        //move down
+        case 40:
+            xComp = 1;
+            yComp = 0;
+            move(xComp, yComp)
+            break;
+    }
+};
+
+function move(xComp, yComp)
 {
     event.preventDefault();
-    let done = false;
+    let once = true;
     for(let x = 0; x < tileMap01.height; x++)
     {
         for(let y = 0; y < tileMap01.width; y++)
         {
-            if(tileMap01.mapGrid[x][y] == "P" && tileMap01.mapGrid[x+xChange][y+yChange] != "W" && !done)
-            
-            { 
-                //console.log("true");
-                if(tileMap01.mapGrid[x+xChange][y+yChange] == "G" 
-                || tileMap01.mapGrid[x-xChange][y-yChange] == "G"
-                || tileMap01.mapGrid[x-xChange][y-yChange] == "BG")
+            if(tileMap01.mapGrid[x][y] == "P" && tileMap01.mapGrid[x+xComp][y+yComp] != "W" && once)
+            {
+                // debugger;
+                if((tileMap01.mapGrid[x+xComp][y+yComp] == "B"
+                || tileMap01.mapGrid[x+xComp][y+yComp] == "BG")
+                && (tileMap01.mapGrid[x+xComp+xComp][y+yComp+yComp] == "W"
+                || tileMap01.mapGrid[x+xComp+xComp][y+yComp+yComp] == "B"
+                || tileMap01.mapGrid[x+xComp+xComp][y+yComp+yComp] == "BG"))
+                {
+                    break;
+                }
+                
+                //Move a Block
+                if(tileMap01.mapGrid[x+xComp][y+yComp] == "B" 
+                || tileMap01.mapGrid[x+xComp][y+yComp] == "BG"
+                && tileMap01.mapGrid[x+xComp+xComp][y+yComp+yComp] != "W"
+                && tileMap01.mapGrid[x+xComp+xComp][y+yComp+yComp] != "B")
+                {
+                    if(tileMap01.mapGrid[x+xComp+xComp][y+yComp+yComp] == "G")
+                    {
+                        //Move Block and change to BlockInGoal color
+                        let imgBlock = document.createElement('img');
+                        imgBlock.src = 'img/BlockInGoal.jpg';
+                        document.getElementById((x+xComp+xComp) + "," + (y+yComp+yComp)).children[0].replaceWith(imgBlock);    
+                        tileMap01.mapGrid[x+xComp+xComp][y+yComp+yComp] = ["BG"];
+                        isGoal = false;
+
+                        if(tileMap01.mapGrid[x+xComp][y+yComp] == "BG" && (yComp == 0))
+                        {
+                            //Replace element with Goal
+                            let imgGoal = document.createElement('img');
+                            imgGoal.src = 'img/Goal.jpg';
+                            document.getElementById(x + "," + y).children[0].replaceWith(imgGoal);    
+                            tileMap01.mapGrid[x][y] = ["G"];
+
+                        }
+                        else
+                        {
+                            //Replace element with Background
+                            let imgBackground = document.createElement('img');
+                            imgBackground.src = 'img/Background.jpg';
+                            document.getElementById(x + "," + y).children[0].replaceWith(imgBackground);
+                            tileMap01.mapGrid[x][y] = [" "];
+                        }
+                        
+                        //Move Player
+                        let imgPlayer = document.createElement('img');
+                        imgPlayer.src = 'img/Player.jpg';
+                        document.getElementById((x + xComp) + "," + (y + yComp)).children[0].replaceWith(imgPlayer);
+                        tileMap01.mapGrid[x+xComp][y+yComp] = ["P"];
+                        once = false;
+                    }
+                    else if(tileMap01.mapGrid[x+xComp][y+yComp] == "BG" 
+                    || tileMap01.mapGrid[x+xComp][y+yComp] == "B" 
+                    && tileMap01.mapGrid[x-xComp][y-yComp] == "G"  
+                    && tileMap01.mapGrid[x-xComp-xComp][y-yComp-yComp] == "W" )
+                    {
+                        //Move Block
+                        let imgBlock = document.createElement('img');
+                        imgBlock.src = 'img/Block.jpg';
+                        document.getElementById((x+xComp+xComp) + "," + (y+yComp+yComp)).children[0].replaceWith(imgBlock);    
+                        tileMap01.mapGrid[x+xComp+xComp][y+yComp+yComp] = ["B"];
+                        isGoal = true;
+                        
+                        //Move Player
+                        let imgPlayer = document.createElement('img');
+                        imgPlayer.src = 'img/Player.jpg';
+                        document.getElementById((x + xComp) + "," + (y + yComp)).children[0].replaceWith(imgPlayer);
+                        tileMap01.mapGrid[x+xComp][y+yComp] = ["P"];
+                        once = false;
+
+                        //Replace element with Goal
+                        let imgGoal = document.createElement('img');
+                        imgGoal.src = 'img/Goal.jpg';
+                        document.getElementById(x + "," + y).children[0].replaceWith(imgGoal);    
+                        tileMap01.mapGrid[x][y] = ["G"];                        
+                    }
+                    else
+                    {
+                        //Move Block
+                        let imgBlock = document.createElement('img');
+                        imgBlock.src = 'img/Block.jpg';
+                        document.getElementById((x+xComp+xComp) + "," + (y+yComp+yComp)).children[0].replaceWith(imgBlock);    
+                        tileMap01.mapGrid[x+xComp+xComp][y+yComp+yComp] = ["B"];
+                        isGoal = false;
+
+                        //Replace element with Background
+                        let imgBackground = document.createElement('img');
+                        imgBackground.src = 'img/Background.jpg';
+                        document.getElementById(x + "," + y).children[0].replaceWith(imgBackground);
+                        tileMap01.mapGrid[x][y] = [" "];
+
+                        //Move Player
+                        let imgPlayer = document.createElement('img');
+                        imgPlayer.src = 'img/Player.jpg';
+                        document.getElementById((x + xComp) + "," + (y + yComp)).children[0].replaceWith(imgPlayer);
+                        tileMap01.mapGrid[x+xComp][y+yComp] = ["P"];
+                        once = false;
+                    }
+
+                }
+
+                //Only move Player
+                else if(tileMap01.mapGrid[x+xComp][y+yComp] == " "
+                && tileMap01.mapGrid[x-1][y] != "G" && tileMap01.mapGrid[x-1][y] != "BG"
+                && tileMap01.mapGrid[x+1][y] != "G" && tileMap01.mapGrid[x+1][y] != "BG")
+                {
+                    //Move Player
+                    let imgPlayer = document.createElement('img');
+                    imgPlayer.src = 'img/Player.jpg';
+                    document.getElementById((x + xComp) + "," + (y + yComp)).children[0].replaceWith(imgPlayer);
+                    tileMap01.mapGrid[x+xComp][y+yComp] = ["P"];
+                    once = false;
+
+                    //Replace element with Background
+                    let imgBackground = document.createElement('img');
+                    imgBackground.src = 'img/Background.jpg';
+                    document.getElementById(x + "," + y).children[0].replaceWith(imgBackground);
+                    tileMap01.mapGrid[x][y] = [" "];                    
+                }
+                else if(tileMap01.mapGrid[x+xComp][y+yComp] == "G" 
+                || tileMap01.mapGrid[x-xComp][y-yComp] == "G"
+                || tileMap01.mapGrid[x-xComp][y-yComp] == "BG")
                 {
                     if(tileMap01.mapGrid[x][y+1] == "B")
                     {
@@ -102,7 +219,7 @@ function move(xChange, yChange)
                         //Replace element with Goal
                         let imgGoal = document.createElement('img');
                         imgGoal.src = 'img/Goal.jpg';
-                        document.getElementById("x" + x + "y" + y).children[0].replaceWith(imgGoal);    
+                        document.getElementById(x + "," + y).children[0].replaceWith(imgGoal);    
                         tileMap01.mapGrid[x][y] = ["G"];
                     }
                     else
@@ -110,10 +227,10 @@ function move(xChange, yChange)
                         //Replace element with Background
                         let imgBackground = document.createElement('img');
                         imgBackground.src = 'img/Background.jpg';
-                        document.getElementById("x" + x + "y" + y).children[0].replaceWith(imgBackground);
+                        document.getElementById(x + "," + y).children[0].replaceWith(imgBackground);
                         tileMap01.mapGrid[x][y] = [" "];
                     }
-                    if(tileMap01.mapGrid[x + xChange][y + yChange] == "G")
+                    if(tileMap01.mapGrid[x + xComp][y + yComp] == "G")
                     {
                         isGoal = true;
                     }
@@ -124,131 +241,11 @@ function move(xChange, yChange)
                     //Move Player
                     let imgPlayer = document.createElement('img');
                     imgPlayer.src = 'img/Player.jpg';
-                    document.getElementById("x" + (x + xChange) + "y" + (y + yChange)).children[0].replaceWith(imgPlayer);
-                    tileMap01.mapGrid[x+xChange][y+yChange] = ["P"];
-                    done = true;
-                }
-
-                //Only move Player
-                else if(tileMap01.mapGrid[x+xChange][y+yChange] == " "
-                && tileMap01.mapGrid[x-1][y] != "G" && tileMap01.mapGrid[x-1][y] != "BG"
-                && tileMap01.mapGrid[x+1][y] != "G" && tileMap01.mapGrid[x+1][y] != "BG")
-                {
-                    //Move Player
-                    let imgPlayer = document.createElement('img');
-                    imgPlayer.src = 'img/Player.jpg';
-                    document.getElementById("x" + (x + xChange) + "y" + (y + yChange)).children[0].replaceWith(imgPlayer);
-                    tileMap01.mapGrid[x+xChange][y+yChange] = ["P"];
-                    done = true;
-
-                    //Replace element with Background
-                    let imgBackground = document.createElement('img');
-                    imgBackground.src = 'img/Background.jpg';
-                    document.getElementById("x" + x + "y" + y).children[0].replaceWith(imgBackground);
-                    tileMap01.mapGrid[x][y] = [" "];                    
-                }
-
-                //Move a Block
-                else if(tileMap01.mapGrid[x+xChange][y+yChange] == "B" 
-                || tileMap01.mapGrid[x+xChange][y+yChange] == "BG"
-                && tileMap01.mapGrid[x+xChange+xChange][y+yChange+yChange] != "W"
-                && tileMap01.mapGrid[x+xChange+xChange][y+yChange+yChange] != "B")
-                {
-                    if(tileMap01.mapGrid[x+xChange+xChange][y+yChange+yChange] == "G")
-                    {
-                        let imgBlock = document.createElement('img');
-                        imgBlock.src = 'img/BlockInGoal.jpg';
-                        document.getElementById("x" +(x+xChange+xChange) + "y" + (y+yChange+yChange)).children[0].replaceWith(imgBlock);    
-                        tileMap01.mapGrid[x+xChange+xChange][y+yChange+yChange] = ["BG"];
-                        isGoal = false;
-
-                        if(tileMap01.mapGrid[x+xChange][y+yChange] == "BG" && (yChange == 0))
-                        {
-                            //Replace element with Goal
-                            let imgGoal = document.createElement('img');
-                            imgGoal.src = 'img/Goal.jpg';
-                            document.getElementById("x"+ x + "y" + y).children[0].replaceWith(imgGoal);    
-                            tileMap01.mapGrid[x][y] = ["G"];
-
-                        }
-                        else
-                        {
-                            //Replace element with Background
-                            let imgBackground = document.createElement('img');
-                            imgBackground.src = 'img/Background.jpg';
-                            document.getElementById("x" + x + "y" + y).children[0].replaceWith(imgBackground);
-                            tileMap01.mapGrid[x][y] = [" "];
-                        }
-                        //Move Player
-                        let imgPlayer = document.createElement('img');
-                        imgPlayer.src = 'img/Player.jpg';
-                        document.getElementById("x" +(x + xChange) + "y" + (y + yChange)).children[0].replaceWith(imgPlayer);
-                        tileMap01.mapGrid[x+xChange][y+yChange] = ["P"];
-                        done = true;
-                    }
-                    
-                    else if(tileMap01.mapGrid[x+xChange][y+yChange] == "BG" 
-                    || tileMap01.mapGrid[x+xChange][y+yChange] == "B" 
-                    && tileMap01.mapGrid[x-xChange][y-yChange] == "G"  
-                    && tileMap01.mapGrid[x-xChange-xChange][y-yChange-yChange] == "W" )
-                    {
-                        //Move Block-+
-                        let imgBlock = document.createElement('img');
-                        imgBlock.src = 'img/Block.jpg';
-                        document.getElementById("x" + (x+xChange+xChange) + "y" + (y+yChange+yChange)).children[0].replaceWith(imgBlock);    
-                        tileMap01.mapGrid[x+xChange+xChange][y+yChange+yChange] = ["B"];
-                        isGoal = true;
-                        
-                        //Move Player
-                        let imgPlayer = document.createElement('img');
-                        imgPlayer.src = 'img/Player.jpg';
-                        document.getElementById("x" +(x + xChange) + "y" + (y + yChange)).children[0].replaceWith(imgPlayer);
-                        tileMap01.mapGrid[x+xChange][y+yChange] = ["P"];
-                        done = true;
-
-                        //Replace element with Goal
-                        let imgGoal = document.createElement('img');
-                        imgGoal.src = 'img/Goal.jpg';
-                        document.getElementById("x" + x + "y" + y).children[0].replaceWith(imgGoal);    
-                        tileMap01.mapGrid[x][y] = ["G"];                        
-                    }
-                    else
-                    {
-                        //Move Block
-                        let imgBlock = document.createElement('img');
-                        imgBlock.src = 'img/Block.jpg';
-                        document.getElementById("x" + (x+xChange+xChange) + "y" + (y+yChange+yChange)).children[0].replaceWith(imgBlock);    
-                        tileMap01.mapGrid[x+xChange+xChange][y+yChange+yChange] = ["B"];
-                        isGoal = false;
-
-                        //Replace element with Background
-                        let imgBackground = document.createElement('img');
-                        imgBackground.src = 'img/Background.jpg';
-                        document.getElementById("x" +x + "y" + y).children[0].replaceWith(imgBackground);
-                        tileMap01.mapGrid[x][y] = [" "];
-
-                        //Move Player
-                        let imgPlayer = document.createElement('img');
-                        imgPlayer.src = 'img/Player.jpg';
-                        document.getElementById("x" + (x + xChange) + "y" + (y + yChange)).children[0].replaceWith(imgPlayer);
-                        tileMap01.mapGrid[x+xChange][y+yChange] = ["P"];
-                        done = true;
-                    }
-
-                }
-
-                if((tileMap01.mapGrid[x+xChange][y+yChange] == "B"
-                || tileMap01.mapGrid[x+xChange][y+yChange] == "BG")
-                && (tileMap01.mapGrid[x+xChange+xChange][y+yChange+yChange] == "W"
-                || tileMap01.mapGrid[x+xChange+xChange][y+yChange+yChange] == "B"
-                || tileMap01.mapGrid[x+xChange+xChange][y+yChange+yChange] == "BG"))
-                {
-                    break;
+                    document.getElementById((x + xComp) + "," + (y + yComp)).children[0].replaceWith(imgPlayer);
+                    tileMap01.mapGrid[x+xComp][y+yComp] = ["P"];
+                    once = false;
                 }
             }
         }
     }
-} 
-
-
-
+}
